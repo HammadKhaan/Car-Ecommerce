@@ -1,38 +1,39 @@
-import React from 'react'
-import Logo from '../assets/logo.png'
-import '../../src/Global.css';
+import React from "react";
+import "../../src/Global.css";
+import { Layout, Menu, Breadcrumb } from "antd";
+import Logo from "../assets/logo2.png";
 
 const Header = () => {
-    return (
-        <div>
-            <div style={{backgroundColor:'grey',height: 'max-content', padding: 10}}>
-                <div>
-                    <img src={Logo} style={{height:55,width:90}}/>
-                </div>
-                <div >
-                    <ul className='nav-list'> 
-                        <li>Home</li>
-                        <li>Brand</li>
-                        <li>About us</li>   
-                        <li>Contact us</li>
-                    </ul> 
-                </div>
-                <div>
+  const { Header } = Layout;
+  return (
+    <Header
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+      }}
+    >
+      <div className="logo">
+        <img
+          src={Logo}
+          style={{ height: "45px", width: "140px", cursor: "pointer" }}
+        />
+      </div>
+      <Menu theme="dark" mode="horizontal">
+        {[
+          `Home`,
+          `Brands`,
+          `Comparision`,
+          `About Us`,
+          `Contact Us`,
+          `Try Our Recommendation System`,
+        ].map((item, index) => {
+          const key = index + 1;
+          return <Menu.Item key={key}>{item}</Menu.Item>;
+        })}
+      </Menu>
+    </Header>
+  );
+};
 
-                </div>
-                <div>
-
-                </div>
-                <div>
-
-                </div>
-                <div>
-
-                </div>
-            </div>
-
-        </div>
-    )
-}
-
-export default Header
+export default Header;
