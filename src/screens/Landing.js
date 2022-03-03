@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { Layout, Menu, Breadcrumb } from "antd";
 import Footer from "../components/Footer";
@@ -14,11 +14,26 @@ import KIA from "../assets/kia-logo.png";
 import Hyundai from "../assets/hyundai-logo.png";
 import Toyota from "../assets/toyota-logo.png";
 import { featuredData } from "../constants/data";
+import axios from "axios";
 
 const Landing = () => {
   const { Content } = Layout;
   const { Meta } = Card;
   const { Title } = Typography;
+  const [car, setCar] = useState([]);
+
+  const getCar = async () => {
+    const { data } = await axios.get(
+      `https://car-ecomm.herokuapp.com/api/name/`
+    );
+    return data;
+  };
+  useEffect(async () => {
+    const data = await getCar();
+    setCar(data);
+    console.log("car", car);
+  }, []);
+  // console.log("car", car);
 
   const contentStyle = {
     height: "160px",
@@ -59,40 +74,49 @@ const Landing = () => {
                 marginLeft: 80,
               }}
             >
-              {featuredData.map((item, index) => {
+              {car.map((item, index) => {
                 return (
-                  <div style={{ width: 340, marginTop: 20 }}>
-                    <Card
-                      hoverable
-                      style={{ width: 240, borderRadius: 10 }}
-                      cover={
-                        <img
-                          alt="example"
-                          src={item.image}
-                          style={{
-                            height: "150px",
-                            borderTopLeftRadius: 10,
-                            borderTopRightRadius: 10,
-                          }}
-                        />
-                      }
-                      key={index}
-                    >
-                      <Meta
-                        title={item.title}
-                        description={`PKR ${item.price}`}
-                      />
-                      <Button
-                        type="link"
-                        style={{
-                          marginLeft: "25px",
-                          marginTop: "10px",
-                        }}
-                      >
-                        See more details
-                      </Button>
-                    </Card>
-                  </div>
+                  <>
+                    {index < 6 ? (
+                      <div style={{ width: 340, marginTop: 20 }}>
+                        <Card
+                          hoverable
+                          style={{ width: 240, borderRadius: 10 }}
+                          cover={
+                            <img
+                              alt="example"
+                              src={`https://drive.google.com/uc?export=view&id=${item.img1.slice(
+                                32,
+                                65
+                              )}`}
+                              style={{
+                                height: "150px",
+                                borderTopLeftRadius: 10,
+                                borderTopRightRadius: 10,
+                              }}
+                            />
+                          }
+                          key={index}
+                        >
+                          <Meta
+                            title={item.Name}
+                            description={`PKR ${item.Price}`}
+                          />
+                          <Button
+                            type="link"
+                            style={{
+                              marginLeft: "25px",
+                              marginTop: "10px",
+                            }}
+                          >
+                            See more details
+                          </Button>
+                        </Card>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                  </>
                 );
               })}
             </div>

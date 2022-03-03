@@ -48,14 +48,31 @@ const featuredData = [
 ];
 
 const brandsData = [
-  { image: Lamborghini, name: "LAMBORGHINI" },
-  { image: Nissan, name: "NISSAN" },
-  { image: KIA, name: "KIA" },
-  { image: Toyota, name: "TOYOTA" },
-  { image: Audi, name: "AUDI" },
-  { image: Hyundai, name: "HYUNDAI" },
-  { image: BMW, name: "BMW" },
-  { image: Honda, name: "HONDA" },
-  { image: Chevrolet, name: "CHEVROLET" },
+  { image: KIA, name: "Kia" },
+  { image: Toyota, name: "Toyota" },
+  { image: Audi, name: "Audi" },
+  { image: Hyundai, name: "Hyundai" },
+  { image: Honda, name: "Honda" },
+  { image: Nissan, name: "Changan" },
+  { image: BMW, name: "MG" },
+  { image: Lamborghini, name: "Lamborghini" },
 ];
-export { featuredData, brandsData };
+
+const relatedCarsData = [
+  {
+    image: AudiA6,
+    title: "Audi A6 2018",
+    price: "9,360,000",
+  },
+  {
+    image: BMW4,
+    title: "BMW 4 2020",
+    price: "18,500,000",
+  },
+  {
+    image: ToyotaCorolla,
+    title: "Toyota Corolla 2021",
+    price: "3,219,000",
+  },
+];
+export { featuredData, brandsData, relatedCarsData };
