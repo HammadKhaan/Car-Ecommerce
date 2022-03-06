@@ -3,7 +3,8 @@ import login_background from "../assets/login_background.jpg";
 import { Input, Card, Button } from "antd";
 import { UserOutlined, MailOutlined, KeyOutlined } from "@ant-design/icons";
 import "../Global.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -14,6 +15,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
+  const navigate = useNavigate();
   return (
     <section
       style={{
@@ -43,7 +45,12 @@ function Login() {
           loading={false}
         >
           {isSignUp ? (
-            <>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log("test");
+              }}
+            >
               <Input
                 size="large"
                 placeholder="Enter Your First Name"
@@ -92,21 +99,55 @@ function Login() {
                 value={emailAddress}
                 onChange={(e) => setEmailAddress(e.target.value)}
               />
-              <Link to="/">
-                <Button
-                  block
-                  style={{
-                    backgroundImage: `linear-gradient(to right, rgba(189, 195, 199, 100), rgba(42, 62, 80, 100))`,
-                    marginTop: "40px",
-                    fontWeight: "bolder",
-                    color: "lightgrey",
-                  }}
-                  size="large"
-                >
-                  {`SIGN UP`}
-                </Button>
-              </Link>
-            </>
+              <Button
+                block
+                style={{
+                  backgroundImage: `linear-gradient(to right, rgba(189, 195, 199, 100), rgba(42, 62, 80, 100))`,
+                  marginTop: "40px",
+                  fontWeight: "bolder",
+                  color: "lightgrey",
+                }}
+                size="large"
+                type="submit"
+                onClick={(e) => {
+                  console.log(
+                    firstName,
+                    lastName,
+                    residenceAddress,
+                    username,
+                    password,
+                    emailAddress
+                  );
+
+                  if (
+                    firstName &&
+                    lastName &&
+                    residenceAddress &&
+                    username &&
+                    password &&
+                    emailAddress
+                  ) {
+                    axios
+                      .post("https://car-ecomm.herokuapp.com/api/admin/user/", {
+                        first_name: firstName,
+                        last_name: lastName,
+                        username: username,
+                        password: password,
+                        email: emailAddress,
+                        address: residenceAddress,
+                      })
+                      .then((resp) => {
+                        console.log(resp);
+                        navigate("/");
+                      });
+                  } else {
+                    alert("Please fill out all the fields");
+                  }
+                }}
+              >
+                {`SIGN UP`}
+              </Button>
+            </form>
           ) : (
             <>
               <Input
